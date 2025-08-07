@@ -43,6 +43,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Custom apps
+    'users',
+    'working_spaces',
+    'spaces',
+    'amenities',
+    'space_prices',
+    'space_bookings',
+    'space_members',
+    'payment_histories',
+    'working_space_managers',
 ]
 
 MIDDLEWARE = [
@@ -91,6 +102,14 @@ DATABASES = {
     }
 }
 
+# SQLite Configuration (for development if MySQL is not available)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -132,3 +151,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom User Model
+AUTH_USER_MODEL = 'users.User'
+
+# Custom migration modules - each app has its own migration folder
+MIGRATION_MODULES = {
+    'users': 'migrations.users',
+    'working_spaces': 'migrations.working_spaces',
+    'spaces': 'migrations.spaces',
+    'amenities': 'migrations.amenities',
+    'space_prices': 'migrations.space_prices',
+    'space_bookings': 'migrations.space_bookings',
+    'space_members': 'migrations.space_members',
+    'payment_histories': 'migrations.payment_histories',
+    'working_space_managers': 'migrations.working_space_managers',
+}
