@@ -1,0 +1,93 @@
+# Vietnamese translations for Co-working Space Booking System
+# Copyright (C) 2025 Co-working Space Booking System
+# This file is distributed under the same license as the Co-working Space Booking System package.
+
+"Project-Id-Version: Co-working Space Booking System 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-14 11:34+0900\n"
+"PO-Revision-Date: 2025-08-14 11:34+0900\n"
+"Last-Translator: Developer <dev@example.com>\n"
+"Language-Team: Vietnamese <vi@li.org>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+# HTTP Error Messages
+msgid "An error occurred"
+msgstr "Đã xảy ra lỗi"
+
+msgid "The requested resource was not found."
+msgstr "Tài nguyên được yêu cầu không được tìm thấy."
+
+msgid "You are not authorized to access this resource."
+msgstr "Bạn không được phép truy cập tài nguyên này."
+
+msgid "You do not have permission to perform this action."
+msgstr "Bạn không có quyền thực hiện hành động này."
+
+msgid "The request was invalid or cannot be served."
+msgstr "Yêu cầu không hợp lệ hoặc không thể được xử lý."
+
+msgid "An unexpected error occurred on the server."
+msgstr "Đã xảy ra lỗi không mong muốn trên máy chủ."
+
+# Common validation messages
+msgid "This field is required."
+msgstr "Trường này là bắt buộc."
+
+msgid "This field may not be blank."
+msgstr "Trường này không được để trống."
+
+msgid "Enter a valid email address."
+msgstr "Nhập một địa chỉ email hợp lệ."
+
+msgid "This field must be at least {min_length} characters long."
+msgstr "Trường này phải có ít nhất {min_length} ký tự."
+
+msgid "Ensure this field has at most {max_length} characters."
+msgstr "Đảm bảo trường này có tối đa {max_length} ký tự."
+
+msgid "This field must be at least 8 characters long."
+msgstr "Trường này phải có ít nhất 8 ký tự."
+
+# User registration messages
+msgid "A user with that username already exists."
+msgstr "Người dùng có tên đăng nhập này đã tồn tại."
+
+msgid "A user with that email already exists."
+msgstr "Người dùng có email này đã tồn tại."
+
+msgid "Verification email has been resent."
+msgstr "Email xác thực đã được gửi lại."
+
+msgid "Password confirmation does not match."
+msgstr "Xác nhận mật khẩu không khớp."
+
+# Auth messages
+msgid "Registration successful. Please check your email to verify your account."
+msgstr "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản."
+
+msgid "Registration failed. Please try again."
+msgstr "Đăng ký thất bại. Vui lòng thử lại."
+
+msgid "Email has been verified successfully."
+msgstr "Email đã được xác thực thành công."
+
+msgid "Verification email has been sent."
+msgstr "Email xác thực đã được gửi."
+
+msgid "Account has already been verified."
+msgstr "Tài khoản đã được xác thực."
+
+# Validation error messages
+msgid "This email is already in use."
+msgstr "Email này đã được sử dụng."
+
+msgid "Email not found."
+msgstr "Không tìm thấy email."
+
+msgid "This username is already in use."
+msgstr "Tên đăng nhập này đã được sử dụng."
