@@ -10,7 +10,8 @@ from .serializers import (
     UserRegistrationSerializer,
     UserSerializer,
     EmailConfirmationSerializer,
-    ResendConfirmationSerializer
+    ResendConfirmationSerializer,
+    LoginSerializer
 )
 from constants.models import UserStatusChoices
 from constants.messages import AuthMessages, ValidationMessages
@@ -47,6 +48,8 @@ class EmailConfirmationView(APIView):
             user.status = UserStatusChoices.ACTIVATED
             user.confirmed_at = timezone.now()
             user.confirmation_token = None
+            user.auth_token = str(access_token)
+            user.refresh_token = str(refresh)
             user.save()
 
             refresh = RefreshToken.for_user(user)
@@ -95,4 +98,47 @@ class ResendConfirmationView(APIView):
 
         return Response({
             'message': AuthMessages.EMAIL_CONFIRMATION_RESENT
+        }, status=status.HTTP_200_OK)
+
+
+class LoginView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        user = serializer.validated_data['user']
+        
+        refresh = RefreshToken.for_user(user)
+        access_token = refresh.access_token
+        user.auth_token = str(access_token)
+        user.refresh_token = str(refresh)
+        user.save()
+        
+        return Response({
+            'access_token': str(access_token),
+            'refresh_token': str(refresh),
+            'user': UserSerializer(user).data
+        }, status=status.HTTP_200_OK)
+
+class LogoutView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        request.user.auth_token = None
+        request.user.refresh_token = None
+        request.user.save()
+        
+        return Response({
+            'message': AuthMessages.LOGOUT_SUCCESS
+        }, status=status.HTTP_200_OK)
+
+
+class ProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        return Response({
+            'user': UserSerializer(request.user).data
         }, status=status.HTTP_200_OK)

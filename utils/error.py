@@ -9,25 +9,24 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
     if response is not None:
-        original_errors = response.data
-        errors = []
-        if isinstance(original_errors, dict):
-            for field, messages in original_errors.items():
-                if isinstance(messages, list):
-                    for message in messages:
-                        errors.append({"field": field, "message": _(message)})
-                else:
-                    errors.append({"field": field, "message": _(messages)})
-        elif isinstance(original_errors, list):
-            for message in original_errors:
-                errors.append({"field": "non_field_errors", "message": _(message)})
-        else:
-            errors.append({"field": "non_field_errors", "message": _(original_errors)})
-
         custom_message = "An error occurred"
+        errors = []
 
         if response.status_code == status.HTTP_400_BAD_REQUEST:
             custom_message = HTTPErrorMessages.BAD_REQUEST
+            original_errors = response.data
+            if isinstance(original_errors, dict):
+                for field, messages in original_errors.items():
+                    if isinstance(messages, list):
+                        for message in messages:
+                            errors.append({"field": field, "message": _(message)})
+                    else:
+                        errors.append({"field": field, "message": _(messages)})
+            elif isinstance(original_errors, list):
+                for message in original_errors:
+                    errors.append({"field": "non_field_errors", "message": _(message)})
+            else:
+                errors.append({"field": "non_field_errors", "message": _(original_errors)})
         elif response.status_code == status.HTTP_401_UNAUTHORIZED:
             custom_message = HTTPErrorMessages.UNAUTHORIZED
         elif response.status_code == status.HTTP_403_FORBIDDEN:

@@ -2,6 +2,9 @@
 # Copyright (C) 2025 Co-working Space Booking System
 # This file is distributed under the same license as the Co-working Space Booking System package.
 
+msgid ""
+msgstr ""
+
 "Project-Id-Version: Co-working Space Booking System 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-14 11:34+0900\n"
@@ -91,3 +94,22 @@ msgstr "Không tìm thấy email."
 
 msgid "This username is already in use."
 msgstr "Tên đăng nhập này đã được sử dụng."
+
+msgid "Invalid token."
+msgstr "Token không hợp lệ."
+
+msgid "Token has expired."
+msgstr "Token đã hết hạn."
+
+msgid "Authentication token not provided."
+msgstr "Chưa cung cấp token xác thực."
+
+# Login/Logout messages
+msgid "Logout successful."
+msgstr "Đăng xuất thành công."
+
+msgid "Invalid email or password."
+msgstr "Email hoặc mật khẩu không đúng."
+
+msgid "Account is not verified. Please check your email."
+msgstr "Tài khoản chưa được xác thực. Vui lòng kiểm tra email."
