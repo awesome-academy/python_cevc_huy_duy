@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.password_validation import validate_password
 import uuid
 from django.utils import timezone
@@ -134,6 +134,32 @@ class ResendConfirmationSerializer(serializers.Serializer):
                     AuthMessages.ACCOUNT_ALREADY_CONFIRMED
                 )
         except User.DoesNotExist:
-            raise serializers.ValidationError(ValidationMessages.EMAIL_NOT_FOUND)
+            raise serializers.ValidationError(
+                ValidationMessages.EMAIL_NOT_FOUND
+              )
 
         return value
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        user = authenticate(username=email, password=password)
+        if not user:
+            raise serializers.ValidationError({
+                'password': AuthMessages.INVALID_CREDENTIALS
+            })
+
+        if not user.confirmed_at:
+            raise serializers.ValidationError({
+                'email': AuthMessages.ACCOUNT_NOT_CONFIRMED
+            })
+
+        attrs['user'] = user
+
+        return attrs

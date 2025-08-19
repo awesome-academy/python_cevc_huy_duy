@@ -23,6 +23,11 @@ class AuthMessages:
     EMAIL_CONFIRMATION_SENT = "Verification email has been sent."
     EMAIL_CONFIRMATION_RESENT = "Verification email has been resent."
     ACCOUNT_ALREADY_CONFIRMED = "Account has already been verified."
+    
+    # Login/Logout
+    LOGOUT_SUCCESS = "Logout successful."
+    INVALID_CREDENTIALS = "Invalid email or password."
+    ACCOUNT_NOT_CONFIRMED = "Account is not verified. Please check your email."
 
 
 # =============================================================================
