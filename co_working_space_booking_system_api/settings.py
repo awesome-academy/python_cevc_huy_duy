@@ -32,7 +32,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
 
 
 # Application definition
@@ -175,7 +175,7 @@ MIGRATION_MODULES = {
 }
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'utils.error.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'utils.exception_handler.custom_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'users.authentication.DatabaseTokenAuthentication',
     ),
