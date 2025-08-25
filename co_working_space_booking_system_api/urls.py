@@ -21,4 +21,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/users/', include('users.urls')),
+    path('api/working-spaces/', include('working_spaces.urls')),
 ]
+
+# Custom error handlers
+handler400 = 'utils.exception_handler.bad_request_handler'
+handler403 = 'utils.exception_handler.permission_denied_handler'
+handler404 = 'utils.exception_handler.page_not_found_handler'
+handler500 = 'utils.exception_handler.internal_server_error_handler'

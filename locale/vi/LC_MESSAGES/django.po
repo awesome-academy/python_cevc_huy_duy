@@ -37,9 +37,54 @@ msgstr "Yêu cầu không hợp lệ hoặc không thể được xử lý."
 msgid "An unexpected error occurred on the server."
 msgstr "Đã xảy ra lỗi không mong muốn trên máy chủ."
 
+msgid "The request method is not allowed for this endpoint."
+msgstr "Phương thức yêu cầu không được phép cho endpoint này."
+
+msgid "The request was well-formed but was unable to be followed due to semantic errors."
+msgstr "Yêu cầu được định dạng tốt nhưng không thể thực hiện do lỗi ngữ nghĩa."
+
+msgid "The query could not be executed successfully."
+msgstr "Truy vấn không thể được thực thi thành công."
+
+msgid "The requested page was not found."
+msgstr "Trang được yêu cầu không được tìm thấy."
+
+msgid "Too many requests. Please try again later."
+msgstr "Quá nhiều yêu cầu. Vui lòng thử lại sau."
+
+msgid "The service is temporarily unavailable."
+msgstr "Dịch vụ tạm thời không khả dụng."
+
+msgid "Malformed request data."
+msgstr "Dữ liệu yêu cầu không đúng định dạng."
+
+msgid "Authentication credentials were not provided or are invalid."
+msgstr "Thông tin xác thực không được cung cấp hoặc không hợp lệ."
+
+msgid "Authentication credentials were not provided."
+msgstr "Thông tin xác thực không được cung cấp."
+
+msgid "Could not satisfy the request Accept header."
+msgstr "Không thể đáp ứng header Accept của yêu cầu."
+
+msgid "Unsupported media type in request."
+msgstr "Loại media không được hỗ trợ trong yêu cầu."
+
+msgid "Request was throttled. Please try again later."
+msgstr "Yêu cầu bị giới hạn tốc độ. Vui lòng thử lại sau."
+
+msgid "Request was throttled. Please wait {wait} seconds."
+msgstr "Yêu cầu bị giới hạn tốc độ. Vui lòng chờ {wait} giây."
+
+msgid "Invalid input provided."
+msgstr "Dữ liệu đầu vào không hợp lệ."
+
 # Common validation messages
 msgid "This field is required."
 msgstr "Trường này là bắt buộc."
+
+msgid "This field must be between {min_val} and {max_val} degrees."
+msgstr "Trường này phải nằm trong khoảng từ {min_val} đến {max_val} độ."
 
 msgid "This field may not be blank."
 msgstr "Trường này không được để trống."
@@ -49,6 +94,9 @@ msgstr "Nhập một địa chỉ email hợp lệ."
 
 msgid "This field must be at least {min_length} characters long."
 msgstr "Trường này phải có ít nhất {min_length} ký tự."
+
+msgid "Ensure this field has at most {max_length} characters."
+msgstr "Đảm bảo trường này có tối đa {max_length} ký tự."
 
 msgid "Ensure this field has at most {max_length} characters."
 msgstr "Đảm bảo trường này có tối đa {max_length} ký tự."
@@ -113,3 +161,34 @@ msgstr "Email hoặc mật khẩu không đúng."
 
 msgid "Account is not verified. Please check your email."
 msgstr "Tài khoản chưa được xác thực. Vui lòng kiểm tra email."
+
+# Working Space messages
+msgid "Working space with this name and city already exists."
+msgstr "Không gian làm việc với tên và thành phố này đã tồn tại."
+
+msgid "Both latitude and longitude are required"
+msgstr "Cần có cả vĩ độ và kinh độ"
+
+msgid "Invalid latitude or longitude format"
+msgstr "Định dạng vĩ độ hoặc kinh độ không hợp lệ"
+
+msgid "Invalid coordinate values"
+msgstr "Giá trị tọa độ không hợp lệ"
+
+msgid "Working space created successfully"
+msgstr "Tạo không gian làm việc thành công"
+
+msgid "Working space updated successfully"
+msgstr "Cập nhật không gian làm việc thành công"
+
+msgid "Working space deleted successfully"
+msgstr "Xóa không gian làm việc thành công"
+
+msgid "Working space not found"
+msgstr "Không tìm thấy không gian làm việc"
+
+msgid "Cannot delete working space due to existing dependencies"
+msgstr "Không thể xóa không gian làm việc do có các phụ thuộc tồn tại"
+
+msgid "If location filtering is used, latitude, longitude, and radius must all be provided."
+msgstr "Nếu sử dụng bộ lọc vị trí, vĩ độ, kinh độ và bán kính phải được cung cấp đầy đủ."
