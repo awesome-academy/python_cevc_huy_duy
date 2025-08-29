@@ -76,3 +76,19 @@ class WorkingSpaceMessages:
     DELETE_SUCCESS = "Working space deleted successfully"
     NOT_FOUND = "Working space not found"
     DELETE_WITH_DEPENDENCIES = "Cannot delete working space due to existing dependencies"
+    LOCATION_FILTER_INCOMPLETE = "For location filtering, latitude, longitude, and radius are all required."
+
+
+# =============================================================================
+# Space Validation Messages
+# =============================================================================
+
+class SpaceMessages:
+    DUPLICATE_NAME_WORKING_SPACE = "Space with this name already exists in this working space."
+    INVALID_TIME_RANGE = "Close time must be after open time."
+    WORKING_SPACE_NOT_FOUND = "Working space not found."
+    CREATION_SUCCESS = "Space created successfully."
+    UPDATE_SUCCESS = "Space updated successfully."
+    DELETE_SUCCESS = "Space deleted successfully."
+    NOT_FOUND = "Space not found."
+    DELETE_WITH_DEPENDENCIES = "Cannot delete space due to existing dependencies."
