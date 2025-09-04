@@ -192,3 +192,40 @@ msgstr "Không thể xóa không gian làm việc do có các phụ thuộc tồ
 
 msgid "If location filtering is used, latitude, longitude, and radius must all be provided."
 msgstr "Nếu sử dụng bộ lọc vị trí, vĩ độ, kinh độ và bán kính phải được cung cấp đầy đủ."
+
+msgid "For location filtering, latitude, longitude, and radius are all required."
+msgstr "Để lọc theo vị trí, vĩ độ, kinh độ và bán kính đều là bắt buộc."
+
+# Space messages
+msgid "Space with this name already exists in this working space."
+msgstr "Không gian với tên này đã tồn tại trong không gian làm việc này."
+
+msgid "Close time must be after open time."
+msgstr "Thời gian đóng cửa phải sau thời gian mở cửa."
+
+msgid "Space created successfully."
+msgstr "Tạo không gian thành công."
+
+msgid "Space updated successfully."
+msgstr "Cập nhật không gian thành công."
+
+msgid "Space deleted successfully."
+msgstr "Xóa không gian thành công."
+
+msgid "Space not found."
+msgstr "Không tìm thấy không gian."
+
+msgid "Cannot delete space due to existing dependencies."
+msgstr "Không thể xóa không gian do có các phụ thuộc tồn tại."
+
+msgid "Working space is required."
+msgstr "Không gian làm việc là bắt buộc."
+
+msgid "Space not found in this working space"
+msgstr "Không tìm thấy không gian trong không gian làm việc này"
+
+msgid "Space does not belong to this working space."
+msgstr "Không gian không thuộc về không gian làm việc này."
+
+msgid "Cannot delete space: associated working space no longer exists."
+msgstr "Không thể xóa không gian: không gian làm việc liên kết không còn tồn tại."

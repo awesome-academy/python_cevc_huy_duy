@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from working_spaces.models import WorkingSpace
-from constants import SpaceStatusChoices, SpaceTypeChoices
+from constants.models import SpaceStatusChoices, SpaceTypeChoices
 
 
 class Space(models.Model):
@@ -18,7 +18,7 @@ class Space(models.Model):
         default=SpaceStatusChoices.WAITING
     )
     
-    type = models.CharField(
+    space_type = models.CharField(
         max_length=20,
         choices=SpaceTypeChoices.choices,
         default=SpaceTypeChoices.WORKING_DESK
@@ -36,6 +36,18 @@ class Space(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['working_space'], name='space_working_space_idx'),
+            models.Index(fields=['working_space', 'name'], name='space_working_space_name_idx'),
+        ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['working_space', 'name'],
+                name='unique_space_name_per_working_space'
+            )
+        ]
     
     def __str__(self):
         return f"{self.name} - {self.working_space.name}"
