@@ -1,8 +1,11 @@
 from rest_framework import serializers
 from .models import Space
 from working_spaces.models import WorkingSpace
+from space_prices.models import SpacePrice
 from constants.messages import SpaceMessages
+from constants.models import PriceTypeChoices
 from utils.validators import validate_required_string
+from decimal import Decimal
 
 
 class SpaceFilterSerializer(serializers.Serializer):
@@ -112,6 +115,46 @@ class SpaceCreateSerializer(SpaceSerializer):
         return attrs
 
 
+class SpacePriceInputSerializer(serializers.Serializer):
+    price_type = serializers.ChoiceField(choices=PriceTypeChoices.choices)
+    price = serializers.DecimalField(max_digits=10, decimal_places=2, min_value=Decimal('0.01'))
+
+
+class SpaceCreateWithPricesSerializer(SpaceCreateSerializer):
+    prices = SpacePriceInputSerializer(many=True, required=True)
+    
+    class Meta(SpaceCreateSerializer.Meta):
+        fields = SpaceCreateSerializer.Meta.fields + ['prices']
+    
+    def validate_prices(self, prices):
+        if len(prices) != 3:
+            raise serializers.ValidationError(SpaceMessages.PRICE_ALL_TYPES_REQUIRED)
+        
+        price_types = [price['price_type'] for price in prices]
+        required_types = [PriceTypeChoices.HOUR, PriceTypeChoices.DAY, PriceTypeChoices.MONTH]
+        
+        if set(price_types) != set(required_types):
+            raise serializers.ValidationError(SpaceMessages.PRICE_HOUR_DAY_MONTH_REQUIRED)
+        
+        if len(price_types) != len(set(price_types)):
+            raise serializers.ValidationError(SpaceMessages.DUPLICATE_PRICE_TYPES)
+        
+        return prices
+    
+    def create(self, validated_data):
+        prices_data = validated_data.pop('prices')
+        space = super().create(validated_data)
+        
+        for price_data in prices_data:
+            SpacePrice.objects.create(
+                space=space,
+                type=price_data['price_type'],
+                price=price_data['price']
+            )
+        
+        return space
+
+
 class SpaceUpdateSerializer(SpaceSerializer):
     def validate(self, attrs):
         attrs = super().validate(attrs)
@@ -132,3 +175,59 @@ class SpaceUpdateSerializer(SpaceSerializer):
                 })
         
         return attrs
+
+
+class SpaceUpdateWithPricesSerializer(SpaceUpdateSerializer):
+    prices = SpacePriceInputSerializer(many=True, required=False)
+    
+    class Meta(SpaceUpdateSerializer.Meta):
+        fields = SpaceUpdateSerializer.Meta.fields + ['prices']
+    
+    def validate_prices(self, prices):
+        if prices:
+            if len(prices) != 3:
+                raise serializers.ValidationError(SpaceMessages.PRICE_ALL_TYPES_REQUIRED)
+            
+            price_types = [price['price_type'] for price in prices]
+            required_types = [PriceTypeChoices.HOUR, PriceTypeChoices.DAY, PriceTypeChoices.MONTH]
+            
+            if set(price_types) != set(required_types):
+                raise serializers.ValidationError(SpaceMessages.PRICE_HOUR_DAY_MONTH_REQUIRED)
+            
+            if len(price_types) != len(set(price_types)):
+                raise serializers.ValidationError(SpaceMessages.DUPLICATE_PRICE_TYPES)
+        
+        return prices
+    
+    def update(self, instance, validated_data):
+        prices_data = validated_data.pop('prices', None)
+        
+        space = super().update(instance, validated_data)
+        
+        if prices_data is not None:
+            SpacePrice.objects.filter(space=space).delete()
+            
+            for price_data in prices_data:
+                SpacePrice.objects.create(
+                    space=space,
+                    type=price_data['price_type'],
+                    price=price_data['price']
+                )
+        
+        return space
+
+
+class SpacePriceSerializer(serializers.ModelSerializer):
+    price_type_display = serializers.CharField(source='get_type_display', read_only=True)
+    
+    class Meta:
+        model = SpacePrice
+        fields = ['type', 'price_type_display', 'price']
+
+
+class SpaceWithPricesSerializer(SpaceSerializer):
+    prices = SpacePriceSerializer(many=True, read_only=True)
+    working_space_name = serializers.CharField(source='working_space.name', read_only=True)
+    
+    class Meta(SpaceSerializer.Meta):
+        fields = SpaceSerializer.Meta.fields + ['prices', 'working_space_name']
