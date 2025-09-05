@@ -92,3 +92,28 @@ class SpaceMessages:
     DELETE_SUCCESS = "Space deleted successfully."
     NOT_FOUND = "Space not found."
     DELETE_WITH_DEPENDENCIES = "Cannot delete space due to existing dependencies."
+    PRICE_ALL_TYPES_REQUIRED = "You must provide prices for all 3 types: hour, day, month."
+    PRICE_HOUR_DAY_MONTH_REQUIRED = "You must provide prices for hour, day, and month."
+    DUPLICATE_PRICE_TYPES = "Duplicate price types are not allowed."
+
+
+# =============================================================================
+# Booking Validation Messages
+# =============================================================================
+
+class BookingMessages:
+    CREATION_SUCCESS = "Booking created successfully."
+    UPDATE_SUCCESS = "Booking updated successfully."
+    DELETE_SUCCESS = "Booking deleted successfully."
+    CANCEL_SUCCESS = "Booking cancelled successfully."
+    NOT_FOUND = "Booking not found."
+    SPACE_NOT_FOUND = "Space not found."
+    UNAUTHORIZED_ACCESS = "You are not authorized to access this booking."
+    INVALID_TIME_RANGE = "End time must be after start time."
+    INVALID_DATE_RANGE = "Start date must be before end date."
+    PAST_START_TIME = "Start time must be in the future."
+    TIME_SLOT_OVERLAP = "This time slot overlaps with an existing booking."
+    CANNOT_MODIFY_COMPLETED = "Cannot modify a completed booking."
+    CANNOT_CANCEL_PAST = "Cannot cancel a booking that has already started."
+    ALREADY_CANCELLED = "Booking is already cancelled."
+    INVALID_STATUS_TRANSITION = "Invalid status transition."

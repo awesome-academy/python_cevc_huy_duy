@@ -4,9 +4,9 @@ from django.db.models import Q
 from working_spaces.models import WorkingSpace
 from .models import Space
 from .serializers import (
-    SpaceSerializer,
-    SpaceCreateSerializer,
-    SpaceUpdateSerializer,
+    SpaceCreateWithPricesSerializer,
+    SpaceWithPricesSerializer,
+    SpaceUpdateWithPricesSerializer,
     SpaceListSerializer,
     SpaceFilterSerializer
 )
@@ -14,7 +14,7 @@ from constants.messages import SpaceMessages
 
 
 class SpaceCreateView(generics.CreateAPIView):
-    serializer_class = SpaceCreateSerializer
+    serializer_class = SpaceCreateWithPricesSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
@@ -37,7 +37,7 @@ class SpaceCreateView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         space = serializer.save()
 
-        response_serializer = SpaceSerializer(space)
+        response_serializer = SpaceWithPricesSerializer(space)
         return Response(
             {
                 'message': SpaceMessages.CREATION_SUCCESS,
@@ -139,8 +139,8 @@ class SpaceDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_serializer_class(self):
         if self.request.method in ['PUT', 'PATCH']:
-            return SpaceUpdateSerializer
-        return SpaceSerializer
+            return SpaceUpdateWithPricesSerializer
+        return SpaceWithPricesSerializer
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -181,9 +181,10 @@ class SpaceDetailView(generics.RetrieveUpdateDestroyAPIView):
 
         serializer.save()
 
+        response_serializer = SpaceWithPricesSerializer(instance)
         return Response({
             'message': SpaceMessages.UPDATE_SUCCESS,
-            'space': serializer.data
+            'space': response_serializer.data
         }, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs):

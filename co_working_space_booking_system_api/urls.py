@@ -22,6 +22,7 @@ urlpatterns = [
 
     path('api/users/', include('users.urls')),
     path('api/working-spaces/', include('working_spaces.urls')),
+    path('api/', include('space_bookings.urls')),
 ]
 
 # Custom error handlers

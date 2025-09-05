@@ -1,7 +1,7 @@
 from rest_framework.exceptions import (
     ParseError, AuthenticationFailed, NotAuthenticated,
     PermissionDenied, NotFound, MethodNotAllowed, NotAcceptable,
-    UnsupportedMediaType, Throttled, ValidationError
+    UnsupportedMediaType, Throttled, ValidationError as DRFValidationError
 )
 from rest_framework import status
 from django.utils.translation import gettext_lazy as _
@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from constants.messages import HTTPErrorMessages
 from django.db import DatabaseError
 from django.http import JsonResponse
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError as DjangoValidationError
 import traceback
 
 import logging
@@ -186,6 +186,46 @@ def _handle_unhandled_exception(exc):
     )
 
 
+def _handle_django_validation_error(exc):
+    logger.info(f"Django validation error: {str(exc)}")
+    
+    if hasattr(exc, 'message_dict'):
+        errors = []
+        for field, messages in exc.message_dict.items():
+            for message in messages:
+                errors.append({
+                    'detail': str(message),
+                    'attr': field
+                })
+        
+        response_data = {
+            'type': 'validation_error',
+            'errors': errors
+        }
+    elif hasattr(exc, 'messages'):
+        errors = []
+        for message in exc.messages:
+            errors.append({
+                'detail': str(message),
+                'attr': None
+            })
+        
+        response_data = {
+            'type': 'validation_error', 
+            'errors': errors
+        }
+    else:
+        response_data = _create_error_response(
+            'validation_error',
+            str(exc)
+        )
+    
+    return Response(
+        response_data,
+        status=status.HTTP_400_BAD_REQUEST
+    )
+
+
 def custom_exception_handler(exc, context):
     response = drf_exception_handler(exc, context)
 
@@ -215,7 +255,7 @@ def _handle_drf_exceptions(exc, response):
         if isinstance(exc, exception_type):
             return handler(exc)
 
-    if isinstance(exc, ValidationError):
+    if isinstance(exc, DRFValidationError):
         return _handle_validation_error(exc, response)
 
     return _handle_generic_api_error(exc)
@@ -226,6 +266,8 @@ def _handle_non_drf_exceptions(exc):
         return _handle_database_error(exc)
     elif isinstance(exc, ObjectDoesNotExist):
         return _handle_object_does_not_exist(exc)
+    elif isinstance(exc, DjangoValidationError):
+        return _handle_django_validation_error(exc)
     else:
         return _handle_unhandled_exception(exc)
 
