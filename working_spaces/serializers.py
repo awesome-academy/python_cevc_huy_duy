@@ -35,7 +35,6 @@ class WorkingSpaceFilterSerializer(serializers.Serializer):
         return attrs
 
     def get_cleaned_data(self):
-        """Return cleaned data with stripped strings and validated values."""
         data = {}
         
         search = self.validated_data.get('search')
